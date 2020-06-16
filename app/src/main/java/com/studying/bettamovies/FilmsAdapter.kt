@@ -36,7 +36,7 @@ class FilmsAdapter() : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
             nameUI.text = movie.name
             popularityUI.text = movie.popularity.toString()
             Glide.with(itemView.context)
-                .load(movie.image)
+                .load("https://image.tmdb.org/t/p/w500/"+movie.image)
                 .into(posterUI)
         }
     }
