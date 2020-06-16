@@ -7,11 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.studying.bettamovies.network.models.Movie
 import kotlinx.android.synthetic.main.item_films.view.*
 
 class FilmsAdapter() : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
 
-    private val listOfFilms: MutableList<RequestModel> = ArrayList()
+    private val listOfFilms = mutableListOf<Movie>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_films, parent, false)
@@ -29,21 +30,21 @@ class FilmsAdapter() : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
 
         private var nameUI: TextView = itemView.txt_name
         private var popularityUI: TextView = itemView.txt_popularity
-        private var posterUI:ImageView = itemView.img_poster
+        private var posterUI: ImageView = itemView.img_poster
 
-        fun bind(film: Any){
-            nameUI.text = film.name
-            popularityUI.text = film.popularity
+        fun bind(movie: Movie) {
+            nameUI.text = movie.name
+            popularityUI.text = movie.popularity.toString()
             Glide.with(itemView.context)
-                .load(film.URL)
+                .load(movie.image)
                 .into(posterUI)
         }
     }
 
-    fun update(listOfFilm: List<>) {
-        listOfFilm.apply {
+    fun update(list: List<Movie>) {
+        listOfFilms.apply {
             clear()
-            addAll(listOfDrinks)
+            addAll(list)
         }
         notifyDataSetChanged()
     }
