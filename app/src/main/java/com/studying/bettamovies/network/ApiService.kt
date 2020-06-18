@@ -16,14 +16,23 @@ object ApiService {
     private const val END_POINT = "https://api.themoviedb.org/3/movie/"
     private const val API_KAY = "f4667f3a076d211f6606630182df9053"
 
+
+
     private val movieApi: MovieApi
 
-    fun getPopularMovies() = movieApi.popularMovies(API_KAY)
+    fun getPopularMovies(page: Int) = movieApi.popularMovies(API_KAY, "en-US", page)
     fun getMovieById(id: Int) = movieApi.findById(id)
+
+    fun getImageUrl(shortUrl: String) =
+        "https://image.tmdb.org/t/p/w500/$shortUrl?api_key=$API_KAY"
 
     interface MovieApi {
         @GET("popular")
-        fun popularMovies(@Query("api_key") key: String): Single<RequestModel>
+        fun popularMovies(
+            @Query("api_key") key: String,
+            @Query("language") language: String,
+            @Query("page") page: Int
+        ): Single<RequestModel>
         @GET("{external_id}")
         fun findById(@Path("external_id")id: Int): Single<RequestModel>
 

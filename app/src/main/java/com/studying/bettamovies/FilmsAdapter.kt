@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.Movie
 import kotlinx.android.synthetic.main.item_films.view.*
 
@@ -36,7 +37,7 @@ class FilmsAdapter() : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
             nameUI.text = movie.name
             popularityUI.text = movie.popularity.toString()
             Glide.with(itemView.context)
-                .load("https://image.tmdb.org/t/p/w500/"+movie.image)
+                .load(ApiService.getImageUrl(movie.image))
                 .into(posterUI)
         }
     }
