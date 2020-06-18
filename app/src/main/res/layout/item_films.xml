@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="600dp">
 
     <ImageView
         android:id="@+id/img_poster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,16 +25,23 @@
         app:layout_constraintTop_toTopOf="@+id/img_poster"
         tools:text="popularity" />
 
+    <View
+        android:id="@+id/tint"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/my_gradient_drawable"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <TextView
         android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="19dp"
         android:layout_marginEnd="173dp"
-        android:background="@drawable/my_gradient_drawable"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="20sp"
         android:textStyle="italic"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/img_poster"
         app:layout_constraintEnd_toEndOf="@+id/img_poster"
         app:layout_constraintStart_toStartOf="@+id/img_poster"
