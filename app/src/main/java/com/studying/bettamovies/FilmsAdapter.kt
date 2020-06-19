@@ -11,10 +11,10 @@ import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.Movie
 import kotlinx.android.synthetic.main.item_films.view.*
 
-class FilmsAdapter() : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
+class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
 
     private val listOfFilms = mutableListOf<Movie>()
-    private lateinit var listener: OnFilmClickListener
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_films, parent, false)
