@@ -22,7 +22,7 @@ object ApiService {
     private val movieApi: MovieApi
 
     fun getPopularMovies(page: Int) = movieApi.popularMovies(API_KAY, "en-US", page)
-    fun getMovieById(id: Int) = movieApi.findById(id)
+    fun getDetailsById(id: Int) = movieApi.findById(id, API_KAY)
 
     fun getImageUrl(shortUrl: String) =
         "https://image.tmdb.org/t/p/w500/$shortUrl?api_key=$API_KAY"
@@ -34,8 +34,11 @@ object ApiService {
             @Query("language") language: String,
             @Query("page") page: Int
         ): Single<RequestModel>
+
         @GET("{external_id}")
-        fun findById(@Path("external_id")id: Int): Single<FilmDetails>
+        fun findById(
+            @Path("external_id")id: Int,
+            @Query("api_key") key: String): Single<FilmDetails>
     }
 
 

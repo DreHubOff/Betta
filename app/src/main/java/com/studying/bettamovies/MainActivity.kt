@@ -16,14 +16,15 @@ class MainActivity : AppCompatActivity(),OnFilmClickListener {
 
     lateinit var disposable: Disposable
 
-    companion object {
-        val adapterFilm:FilmsAdapter = FilmsAdapter()
-    }
+//    companion object {
+        lateinit var adapterFilm: FilmsAdapter
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        adapterFilm = FilmsAdapter(this)
         films_list.apply {
             layoutManager = GridLayoutManager(this@MainActivity,2)
             adapter = adapterFilm
