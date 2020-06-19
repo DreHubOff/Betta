@@ -12,12 +12,12 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),OnFilmClickListener {
 
     lateinit var disposable: Disposable
 
     companion object {
-        val adapterFilm = FilmsAdapter()
+        val adapterFilm:FilmsAdapter = FilmsAdapter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,5 +53,13 @@ class MainActivity : AppCompatActivity() {
             layoutManager = GridLayoutManager(this.context, 2)
             adapter = adapterFilm
         }
+    }
+
+    override fun onFilmClick(filmID: String) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.films_list,FilmDetailsFragment.newInstance(filmID))
+            .addToBackStack(null)
+            .commit()
     }
 }

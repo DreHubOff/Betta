@@ -14,10 +14,11 @@ import kotlinx.android.synthetic.main.item_films.view.*
 class FilmsAdapter() : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
 
     private val listOfFilms = mutableListOf<Movie>()
+    private lateinit var listener: OnFilmClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_films, parent, false)
-        return FilmsHolder(v)
+        return FilmsHolder(v, listener)
     }
 
     override fun getItemCount() = listOfFilms.size
@@ -27,11 +28,15 @@ class FilmsAdapter() : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
         holder.bind(listOfFilms[position])
     }
 
-    class FilmsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FilmsHolder(
+        itemView: View,
+        var listener: OnFilmClickListener
+    ) : RecyclerView.ViewHolder(itemView) {
 
         private var nameUI: TextView = itemView.txt_name
         private var popularityUI: TextView = itemView.txt_popularity
         private var posterUI: ImageView = itemView.img_poster
+        private var root: View = itemView.item_root
 
         fun bind(movie: Movie) {
             nameUI.text = movie.name
@@ -39,6 +44,7 @@ class FilmsAdapter() : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
             Glide.with(itemView.context)
                 .load(ApiService.getImageUrl(movie.image))
                 .into(posterUI)
+            root.setOnClickListener { listener.onFilmClick(movie.id) }
         }
     }
 
