@@ -1,5 +1,6 @@
 package com.studying.bettamovies.network
 
+import com.studying.bettamovies.network.models.FilmDetails
 import com.studying.bettamovies.network.models.RequestModel
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -34,9 +35,7 @@ object ApiService {
             @Query("page") page: Int
         ): Single<RequestModel>
         @GET("{external_id}")
-        fun findById(@Path("external_id")id: Int): Single<RequestModel>
-
-
+        fun findById(@Path("external_id")id: Int): Single<FilmDetails>
     }
 
 
