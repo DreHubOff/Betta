@@ -53,7 +53,7 @@ class FilmDetailsFragment(private val filmID: String) : Fragment() {
     private fun updateUi(filmDetails: FilmDetails) {
         txt_details_release_date.text = "Release date: ${filmDetails.releaseDate}"
         txt_details_runtime.text = "Runtime: ${filmDetails.runtime} min"
-        txt_details_genres.text = "Genres: ${filmDetails.genres.joinToString { "$it " }}"
+        txt_details_genres.text = "Genres: ${filmDetails.genres.joinToString {it.GenreName}}"
         txt_details_rate.text = "Vote count: ${filmDetails.voteCount}"
         txt_details_overview.text = "Overview: ${filmDetails.overview}"
         txt_details_budget.text = "Budget: ${filmDetails.budget}"
