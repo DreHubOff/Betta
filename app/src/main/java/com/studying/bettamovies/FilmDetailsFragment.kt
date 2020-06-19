@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.studying.bettamovies.model.DataBase
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.FilmDetails
+import io.reactivex.Single.just
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
