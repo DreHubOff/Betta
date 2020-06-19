@@ -40,7 +40,7 @@ class FilmDetailsFragment(private val filmID: String) : Fragment() {
             .subscribe({
                 updateUi(it)
                 Glide.with(view.context)
-                    .load(ApiService.getImageUrl(ApiService.getImageUrl(it.backdropImageURL)))
+                    .load(ApiService.getImageUrl(it.backdropImageURL))
                     .into(background_logo)
             }, {
                 it.printStackTrace()

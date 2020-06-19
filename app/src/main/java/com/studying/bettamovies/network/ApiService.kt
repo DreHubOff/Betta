@@ -25,7 +25,7 @@ object ApiService {
     fun getDetailsById(id: Int) = movieApi.findById(id, API_KAY)
 
     fun getImageUrl(shortUrl: String) =
-        "https://image.tmdb.org/t/p/w500/$shortUrl?api_key=$API_KAY"
+        "https://image.tmdb.org/t/p/w500/$shortUrl"
 
     interface MovieApi {
         @GET("popular")

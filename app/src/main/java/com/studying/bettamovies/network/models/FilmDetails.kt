@@ -3,7 +3,7 @@ package com.studying.bettamovies.network.models
 import com.google.gson.annotations.SerializedName
 
 data class FilmDetails(
-    @SerializedName("backdropPath")
+    @SerializedName("backdrop_path")
     val backdropImageURL: String,
     @SerializedName("budget")
     val budget: Int,
@@ -26,8 +26,6 @@ data class FilmDetails(
 )
 
 data class Genre(
-    @SerializedName("id")
-    var GenreId: Int,
     @SerializedName("name")
     var GenreName: String
 )
