@@ -11,11 +11,11 @@ data class FilmDetails(
     val genres: List<Genre>,
     @SerializedName("homepage")
     val homepage: String,
-    @SerializedName("originalLanguage")
+    @SerializedName("original_language")
     val originalLanguage: String,
     @SerializedName("overview")
     val overview: String,
-    @SerializedName("releaseDate")
+    @SerializedName("release_date")
     val releaseDate: String,
     @SerializedName("runtime")
     val runtime: Int,

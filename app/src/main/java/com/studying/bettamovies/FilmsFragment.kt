@@ -55,7 +55,7 @@ class FilmsFragment : Fragment(),
         disposable = ApiService.getPopularMovies(1)
             .flatMap { firstList ->
                 val resList = mutableListOf<Movie>().apply { addAll(firstList.movies) }
-                for (i in 2..30) {
+                for (i in 2..10) {
                     ApiService.getPopularMovies(i)
                         .subscribe({
                             resList.addAll(it.movies)

@@ -3,18 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#070313"
+    android:background="#000000"
     tools:context=".FilmDetailsFragment">
 
     <ImageView
         android:id="@+id/background_logo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
+        android:scaleType="centerCrop"
         tools:src="@mipmap/ic_launcher" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/my_gradient_drawable"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom">
 
         <LinearLayout
             android:layout_width="wrap_content"
