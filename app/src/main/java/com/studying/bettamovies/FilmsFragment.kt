@@ -22,19 +22,19 @@ import java.lang.IllegalArgumentException
 class FilmsFragment : Fragment(),
     OnFilmClickListener {
 
-    lateinit var disposable: Disposable
-
+    private lateinit var disposable: Disposable
+    private lateinit var  adapterFilm: FilmsAdapter
 
     companion object {
-        val adapterFilm: FilmsAdapter = FilmsAdapter(newInstance())
         fun newInstance() = FilmsFragment()
-        private var navigation: ActivityNavigation? = null
+        lateinit var navigation: ActivityNavigation
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        adapterFilm = FilmsAdapter(this)
         if (context is ActivityNavigation) {
-            navigation = context as ActivityNavigation
+            navigation = context
         } else {
             throw IllegalArgumentException(context::class.java.name + "Error")
         }
@@ -76,5 +76,10 @@ class FilmsFragment : Fragment(),
 
     override fun onFilmClick(filmID: String) {
         navigation?.showFragmentWithCocktailDetails(filmID)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        disposable.dispose()
     }
 }

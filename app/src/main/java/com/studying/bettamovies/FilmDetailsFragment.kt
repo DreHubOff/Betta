@@ -35,16 +35,13 @@ class FilmDetailsFragment(private val filmID: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         disposable = ApiService.getDetailsById(filmID.toInt())
-            .flatMap {
-                Glide.with(view.context)
-                    .load(ApiService.getImageUrl(ApiService.getImageUrl(it.backdropImageURL)))
-                    .into(background_logo)
-                return@flatMap just(it)
-            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 updateUi(it)
+                Glide.with(view.context)
+                    .load(ApiService.getImageUrl(ApiService.getImageUrl(it.backdropImageURL)))
+                    .into(background_logo)
             }, {
                 it.printStackTrace()
                 Toast.makeText(view.context, "Some Error", Toast.LENGTH_SHORT).show()
