@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.studying.bettamovies.interfaces.ActivityNavigation
 import com.studying.bettamovies.interfaces.OnFilmClickListener
+import com.studying.bettamovies.model.DataBase
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.Movie
 import io.reactivex.Single
@@ -51,27 +52,37 @@ class FilmsFragment : Fragment(),
             layoutManager = GridLayoutManager(view.context, 2)
             adapter = adapterFilm
         }
-
-        disposable = ApiService.getPopularMovies(1)
-            .flatMap { firstList ->
-                val resList = mutableListOf<Movie>().apply { addAll(firstList.movies) }
-                for (i in 2..10) {
-                    ApiService.getPopularMovies(i)
-                        .subscribe({
-                            resList.addAll(it.movies)
-                        }, {
-                            it.printStackTrace()
-                            Toast.makeText(view.context, "Some Error", Toast.LENGTH_SHORT).show()
-                        })
+        if (DataBase.generalList.isEmpty()) {
+            disposable = ApiService.getPopularMovies(1)
+                .flatMap { firstList ->
+                    val resList = mutableListOf<Movie>().apply { addAll(firstList.movies) }
+                    for (i in 2..10) {
+                        ApiService.getPopularMovies(i)
+                            .subscribe({
+                                resList.addAll(it.movies)
+                            }, {
+                                it.printStackTrace()
+                                Toast.makeText(view.context, "Some Error", Toast.LENGTH_SHORT)
+                                    .show()
+                            })
+                    }
+                    Single.just(resList)
                 }
-                Single.just(resList)
-            }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ adapterFilm.update(it) }, {
-                it.printStackTrace()
-                Toast.makeText(view.context, "Some Error", Toast.LENGTH_SHORT).show()
-            })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    adapterFilm.update(it)
+                    DataBase.generalList.apply {
+                        clear()
+                        addAll(it)
+                    }
+                    }, {
+                    it.printStackTrace()
+                    Toast.makeText(view.context, "Some Error", Toast.LENGTH_SHORT).show()
+                })
+        }else{
+            adapterFilm.update(DataBase.generalList)
+        }
     }
 
     override fun onFilmClick(filmID: String) {
