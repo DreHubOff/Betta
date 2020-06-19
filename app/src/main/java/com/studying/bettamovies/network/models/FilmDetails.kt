@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class FilmDetails(
     @SerializedName("backdrop_path")
     val backdropImageURL: String,
+    @SerializedName("poster_path")
+    val poster_path: String,
     @SerializedName("budget")
     val budget: Int,
     @SerializedName("genres")
@@ -19,9 +21,9 @@ data class FilmDetails(
     val releaseDate: String,
     @SerializedName("runtime")
     val runtime: Int,
-    @SerializedName("voteAverage")
+    @SerializedName("vote_average")
     var voteAverage: Float,
-    @SerializedName("voteCount")
+    @SerializedName("vote_count")
     var voteCount: Int
 )
 

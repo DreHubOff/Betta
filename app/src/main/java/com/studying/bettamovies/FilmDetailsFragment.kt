@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.studying.bettamovies.model.DataBase
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.FilmDetails
-import io.reactivex.Single.just
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -37,10 +37,17 @@ class FilmDetailsFragment(private val filmID: String) : Fragment() {
         disposable = ApiService.getDetailsById(filmID.toInt())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                updateUi(it)
+            .subscribe({ filmDetails ->
+                updateUi(filmDetails)
                 Glide.with(view.context)
-                    .load(ApiService.getImageUrl(it.backdropImageURL))
+                    .load(ApiService.getImageUrl(
+                        if (filmDetails.backdropImageURL != null) {
+                            filmDetails.backdropImageURL
+                        } else {
+                            DataBase.generalList.find { it.id.toInt() == filmID.toInt() }
+                                ?.image ?: "/nogV4th2P5QWYvQIMiWHj4CFLU9.jpg"
+                        }
+                    ))
                     .into(background_logo)
             }, {
                 it.printStackTrace()
@@ -53,11 +60,12 @@ class FilmDetailsFragment(private val filmID: String) : Fragment() {
     private fun updateUi(filmDetails: FilmDetails) {
         txt_details_release_date.text = "Release date: ${filmDetails.releaseDate}"
         txt_details_runtime.text = "Runtime: ${filmDetails.runtime} min"
-        txt_details_genres.text = "Genres: ${filmDetails.genres.joinToString { "$it " }}"
+        txt_details_genres.text =
+            "Genres: ${filmDetails.genres.joinToString { "${it.GenreName} " }}"
         txt_details_rate.text = "Vote count: ${filmDetails.voteCount}"
-        txt_details_overview.text = "Overview: ${filmDetails.overview}"
+        txt_details_overview.text = "Overview:\n\t${filmDetails.overview}"
         txt_details_budget.text = "Budget: ${filmDetails.budget}"
-        txt_details_homepage.text = "Homepage: ${filmDetails.homepage}"
+        txt_details_homepage.text = "Homepage:\n\t${filmDetails.homepage}"
         txt_details_original_language.text = "Original language: ${filmDetails.originalLanguage}"
     }
 }
