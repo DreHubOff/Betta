@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingTop="5dp"
+    tools:context=".ui.main.search.SearchFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_margin="5dp"
+        android:layout_marginVertical="2dp"
+        android:background="@drawable/search_field_background"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="#00ffffff"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="@string/write_name_or_genre"
+            android:inputType="textAutoCorrect"
+            android:textColor="#ffffff"
+            android:textColorHint="#bbbbbb"
+            android:textCursorDrawable="@drawable/ic_cursor" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/search_button_anim"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="1dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp"
+            app:lottie_speed="0.8"
+            app:lottie_rawRes="@raw/search_anim" />
+    </LinearLayout>
+</FrameLayout>

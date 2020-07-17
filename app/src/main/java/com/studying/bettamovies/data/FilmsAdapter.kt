@@ -1,4 +1,4 @@
-package com.studying.bettamovies
+package com.studying.bettamovies.data
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.studying.bettamovies.R
 import com.studying.bettamovies.interfaces.OnFilmClickListener
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.Movie
@@ -19,7 +20,10 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_films, parent, false)
-        return FilmsHolder(v, listener)
+        return FilmsHolder(
+            v,
+            listener
+        )
     }
 
     override fun getItemCount() = listOfFilms.size

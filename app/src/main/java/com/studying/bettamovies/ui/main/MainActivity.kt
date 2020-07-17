@@ -1,15 +1,12 @@
-package com.studying.bettamovies
+package com.studying.bettamovies.ui.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.studying.bettamovies.R
 import com.studying.bettamovies.interfaces.ActivityNavigation
-import com.studying.bettamovies.network.ApiService
-import com.studying.bettamovies.network.models.Movie
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.studying.bettamovies.ui.details.FilmDetailsFragment
+import com.studying.bettamovies.ui.main.list.FilmsFragment
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity(),
     ActivityNavigation {
@@ -22,7 +19,10 @@ class MainActivity : AppCompatActivity(),
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.main_container, FilmsFragment.newInstance())
+            .replace(
+                R.id.main_container,
+                FilmsFragment.newInstance()
+            )
             .addToBackStack(null)
             .commit()
     }

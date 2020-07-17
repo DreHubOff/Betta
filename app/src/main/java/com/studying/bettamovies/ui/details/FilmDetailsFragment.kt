@@ -1,4 +1,4 @@
-package com.studying.bettamovies
+package com.studying.bettamovies.ui.details
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.studying.bettamovies.R
 import com.studying.bettamovies.model.DataBase
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.FilmDetails
-import io.reactivex.Single.just
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

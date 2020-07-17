@@ -1,4 +1,4 @@
-package com.studying.bettamovies
+package com.studying.bettamovies.ui.main.list
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import com.studying.bettamovies.data.FilmsAdapter
+import com.studying.bettamovies.R
 import com.studying.bettamovies.interfaces.ActivityNavigation
 import com.studying.bettamovies.interfaces.OnFilmClickListener
 import com.studying.bettamovies.model.DataBase
@@ -24,7 +26,7 @@ class FilmsFragment : Fragment(),
     OnFilmClickListener {
 
     private lateinit var disposable: Disposable
-    private lateinit var  adapterFilm: FilmsAdapter
+    private lateinit var adapterFilm: FilmsAdapter
 
     companion object {
         fun newInstance() = FilmsFragment()
@@ -76,12 +78,15 @@ class FilmsFragment : Fragment(),
                         clear()
                         addAll(it)
                     }
-                    }, {
+                }, {
                     it.printStackTrace()
                     Toast.makeText(view.context, "Some Error", Toast.LENGTH_SHORT).show()
                 })
-        }else{
+        } else {
             adapterFilm.update(DataBase.generalList)
+        }
+        swipe_refresh_layout?.setOnRefreshListener {
+            swipe_refresh_layout.isRefreshing = true
         }
     }
 
