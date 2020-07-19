@@ -8,13 +8,15 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="420dp">
+        android:layout_height="420dp"
+        android:transitionName="transitionImage">
 
         <ImageView
             android:id="@+id/background_logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            tools:ignore="ContentDescription,UnusedAttribute"
             tools:src="@mipmap/ic_launcher" />
 
         <View
@@ -27,9 +29,11 @@
 
 
     <ScrollView
+        android:id="@+id/info_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"

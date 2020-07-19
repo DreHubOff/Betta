@@ -2,6 +2,7 @@ package com.studying.bettamovies.ui.details
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +17,25 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_film_details_fragment.*
+import kotlinx.coroutines.*
+import okhttp3.Dispatcher
 
-class FilmDetailsFragment(private val filmID: String) : Fragment() {
+class FilmDetailsFragment : Fragment() {
 
     private lateinit var disposable: Disposable
 
+    private var filmId: Int = 0
+
     companion object {
-        fun newInstance(filmID: String) =
-            FilmDetailsFragment(filmID)
+        private var filmDetailsFragment: FilmDetailsFragment? = null
+        var filmID: Int = 0
+        fun getInstance(filmId: String): FilmDetailsFragment? {
+            if (filmDetailsFragment == null) {
+                filmDetailsFragment = FilmDetailsFragment()
+            }
+            filmID = filmId.toInt()
+            return filmDetailsFragment
+        }
     }
 
     override fun onCreateView(
@@ -35,7 +47,7 @@ class FilmDetailsFragment(private val filmID: String) : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        disposable = ApiService.getDetailsById(filmID.toInt())
+        disposable = ApiService.getDetailsById(filmID)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ filmDetails ->
@@ -59,6 +71,12 @@ class FilmDetailsFragment(private val filmID: String) : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun updateUi(filmDetails: FilmDetails) {
+        GlobalScope.launch {
+            delay(300)
+            withContext(Dispatchers.Main){
+                info_scroll.visibility = View.VISIBLE
+            }
+        }
         txt_details_release_date.text = "Release date: ${filmDetails.releaseDate}"
         txt_details_runtime.text = "Runtime: ${filmDetails.runtime} min"
         txt_details_genres.text =

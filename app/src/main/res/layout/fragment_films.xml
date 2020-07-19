@@ -6,26 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.list.FilmsFragment">
 
-
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp">
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/films_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#241650"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         tools:listitem="@layout/item_films" />
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_gravity="top"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_loop="true"-->
-<!--        app:lottie_rawRes="@raw/loading_anim" />-->
-    <include layout="@layout/fragment_search"/>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
 </FrameLayout>

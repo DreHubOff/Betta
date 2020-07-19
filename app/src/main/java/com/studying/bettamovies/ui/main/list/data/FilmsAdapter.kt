@@ -1,10 +1,11 @@
-package com.studying.bettamovies.data
+package com.studying.bettamovies.ui.main.list.data
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.studying.bettamovies.R
@@ -31,17 +32,18 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: FilmsHolder, position: Int) {
         holder.bind(listOfFilms[position])
+        ViewCompat.setTransitionName(holder.root, position.toString() + "_movie")
     }
 
     class FilmsHolder(
         itemView: View,
-        var listener: OnFilmClickListener
+        private var listener: OnFilmClickListener
     ) : RecyclerView.ViewHolder(itemView) {
 
         private var nameUI: TextView = itemView.txt_name
         private var popularityUI: TextView = itemView.txt_popularity
         private var posterUI: ImageView = itemView.img_poster
-        private var root: View = itemView.item_root
+        var root: View = itemView.item_root
 
         fun bind(movie: Movie) {
             nameUI.text = movie.name
@@ -49,7 +51,7 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
             Glide.with(itemView.context)
                 .load(ApiService.getImageUrl(movie.image))
                 .into(posterUI)
-            root.setOnClickListener { listener.onFilmClick(movie.id) }
+            root.setOnClickListener { listener.onFilmClick(movie.id, root) }
         }
     }
 
