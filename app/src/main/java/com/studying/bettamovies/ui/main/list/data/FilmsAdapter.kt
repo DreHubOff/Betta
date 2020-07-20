@@ -18,13 +18,9 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
 
     private val listOfFilms = mutableListOf<Movie>()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_films, parent, false)
-        return FilmsHolder(
-            v,
-            listener
-        )
+        return FilmsHolder(v, listener)
     }
 
     override fun getItemCount() = listOfFilms.size
@@ -35,16 +31,23 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
         ViewCompat.setTransitionName(holder.root, position.toString() + "_movie")
     }
 
+    fun update(list: List<Movie>) {
+        listOfFilms.apply {
+            clear()
+            addAll(list)
+        }
+        notifyDataSetChanged()
+    }
+
     class FilmsHolder(
         itemView: View,
         private var listener: OnFilmClickListener
     ) : RecyclerView.ViewHolder(itemView) {
-
         private var nameUI: TextView = itemView.txt_name
         private var popularityUI: TextView = itemView.txt_popularity
         private var posterUI: ImageView = itemView.img_poster
-        var root: View = itemView.item_root
 
+        var root: View = itemView.item_root
         fun bind(movie: Movie) {
             nameUI.text = movie.name
             popularityUI.text = movie.popularity.toString()
@@ -53,14 +56,7 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
                 .into(posterUI)
             root.setOnClickListener { listener.onFilmClick(movie.id, root) }
         }
-    }
 
-    fun update(list: List<Movie>) {
-        listOfFilms.apply {
-            clear()
-            addAll(list)
-        }
-        notifyDataSetChanged()
     }
 }
 

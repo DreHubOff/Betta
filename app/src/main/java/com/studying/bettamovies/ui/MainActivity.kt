@@ -1,4 +1,4 @@
-package com.studying.bettamovies.ui.main
+package com.studying.bettamovies.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

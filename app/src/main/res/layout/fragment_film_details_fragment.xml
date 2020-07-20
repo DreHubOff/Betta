@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:transitionName="transitionView"
     tools:context=".ui.details.FilmDetailsFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:transitionName="transitionImage">
+        android:layout_height="420dp">
 
         <ImageView
             android:id="@+id/background_logo"
