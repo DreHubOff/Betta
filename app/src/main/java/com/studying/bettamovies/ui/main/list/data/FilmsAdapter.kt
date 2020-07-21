@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.studying.bettamovies.R
+import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.interfaces.OnFilmClickListener
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.Movie
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.item_films.view.*
 
 class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
 
-    private val listOfFilms = mutableListOf<Movie>()
+    private val listOfFilms = mutableListOf<MovieEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_films, parent, false)
@@ -31,7 +32,7 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
         ViewCompat.setTransitionName(holder.root, position.toString() + "_movie")
     }
 
-    fun update(list: List<Movie>) {
+    fun update(list: List<MovieEntity>) {
         listOfFilms.apply {
             clear()
             addAll(list)
@@ -48,13 +49,13 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
         private var posterUI: ImageView = itemView.img_poster
 
         var root: View = itemView.item_root
-        fun bind(movie: Movie) {
-            nameUI.text = movie.name
+        fun bind(movie: MovieEntity) {
+            nameUI.text = movie.originalTitle
             popularityUI.text = movie.popularity.toString()
             Glide.with(itemView.context)
                 .load(ApiService.getImageUrl(movie.image))
                 .into(posterUI)
-            root.setOnClickListener { listener.onFilmClick(movie.id, root) }
+            //root.setOnClickListener { listener.onFilmClick(movie.movieID, root) }
         }
 
     }

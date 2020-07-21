@@ -6,8 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class MovieEntity(
-    @PrimaryKey(autoGenerate = true)
-    var _ID: Long? = null,
     @ColumnInfo(name = "popularity")
     val popularity: Double,
     @ColumnInfo(name = "image")
@@ -30,5 +28,8 @@ data class MovieEntity(
     @ColumnInfo(name = "release_date")
     var releaseDate: String? = null,
     @ColumnInfo(name = "runtime")
-    var runtime: Int = 0
+    var runtime: Int = 0,
+
+    @PrimaryKey(autoGenerate = true)
+    var _ID: Long? = null
 )

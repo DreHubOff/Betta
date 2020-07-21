@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.studying.bettamovies.ui.main.list.data.FilmsAdapter
 import com.studying.bettamovies.R
+import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.interfaces.OnFilmClickListener
 import com.studying.bettamovies.network.models.Movie
 import kotlinx.android.synthetic.main.fragment_films.*
@@ -57,7 +58,7 @@ class FilmsFragment : Fragment(),
         Toast.makeText(view?.context, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun updateUi(list: MutableList<Movie>) {
+    override fun updateUi(list: List<MovieEntity>) {
         adapterFilm.update(list)
     }
 

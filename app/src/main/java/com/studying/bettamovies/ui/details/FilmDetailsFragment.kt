@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.studying.bettamovies.R
-import com.studying.bettamovies.models.DataBase
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.FilmDetails
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,16 +49,16 @@ class FilmDetailsFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ filmDetails ->
                 updateUi(filmDetails)
-                Glide.with(view.context)
-                    .load(ApiService.getImageUrl(
-                        if (filmDetails.backdropImageURL != null) {
-                            filmDetails.backdropImageURL
-                        } else {
-                            DataBase.generalList.find { it.id.toInt() == filmID.toInt() }
-                                ?.image ?: "/nogV4th2P5QWYvQIMiWHj4CFLU9.jpg"
-                        }
-                    ))
-                    .into(background_logo)
+//                Glide.with(view.context)
+//                    .load(ApiService.getImageUrl(
+//                        if (filmDetails.backdropImageURL != null) {
+//                            filmDetails.backdropImageURL
+//                        } else {
+//                            DataBase.generalList.find { it.id.toInt() == filmID.toInt() }
+//                                ?.image ?: "/nogV4th2P5QWYvQIMiWHj4CFLU9.jpg"
+//                        }
+//                    ))
+//                    .into(background_logo)
             }, {
                 it.printStackTrace()
                 Toast.makeText(view.context, "Some Error", Toast.LENGTH_SHORT).show()

@@ -3,6 +3,7 @@ package com.studying.bettamovies.db
 import androidx.room.*
 import com.studying.bettamovies.db.models.MovieEntity
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface ActivityEntityDao {
@@ -19,7 +20,7 @@ interface ActivityEntityDao {
     fun updateAll(movieList: List<MovieEntity>)
 
     @Query("SELECT * FROM MovieEntity")
-    fun selectAll(): Flowable<List<MovieEntity>>
+    fun selectAll(): Single<List<MovieEntity>>
 
     @Query("SELECT * FROM MovieEntity WHERE movie_id = :movieId")
     fun getMovieById(movieId: Long): Flowable<MovieEntity>
