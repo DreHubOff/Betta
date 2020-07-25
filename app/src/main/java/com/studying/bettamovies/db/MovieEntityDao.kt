@@ -23,7 +23,7 @@ interface ActivityEntityDao {
     fun selectAll(): Single<List<MovieEntity>>
 
     @Query("SELECT * FROM MovieEntity WHERE movie_id = :movieId")
-    fun getMovieById(movieId: Long): Flowable<MovieEntity>
+    fun getMovieById(movieId: Int): Single<MovieEntity>
 
     @Delete
     fun deleteSingle(movie: MovieEntity)

@@ -1,4 +1,4 @@
-package com.studying.bettamovies.ui.main.list.data
+package com.studying.bettamovies.ui.main.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +12,6 @@ import com.studying.bettamovies.R
 import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.interfaces.OnFilmClickListener
 import com.studying.bettamovies.network.ApiService
-import com.studying.bettamovies.network.models.Movie
 import kotlinx.android.synthetic.main.item_films.view.*
 
 class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
@@ -21,7 +20,10 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_films, parent, false)
-        return FilmsHolder(v, listener)
+        return FilmsHolder(
+            v,
+            listener
+        )
     }
 
     override fun getItemCount() = listOfFilms.size
@@ -55,7 +57,7 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
             Glide.with(itemView.context)
                 .load(ApiService.getImageUrl(movie.image))
                 .into(posterUI)
-            //root.setOnClickListener { listener.onFilmClick(movie.movieID, root) }
+            root.setOnClickListener { listener.onFilmClick(movie.movieID.toString(), root) }
         }
 
     }

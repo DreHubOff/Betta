@@ -1,25 +1,26 @@
 package com.studying.bettamovies.ui.main.list
 
+import android.app.Activity
 import com.studying.bettamovies.R
 import android.os.Build
 import android.transition.Fade
 import android.view.View
-import androidx.fragment.app.FragmentActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.studying.bettamovies.App
+import com.studying.bettamovies.data.Repository
 import com.studying.bettamovies.ui.animation.DetailsTransition
 import com.studying.bettamovies.ui.details.FilmDetailsFragment
-import com.studying.bettamovies.ui.main.list.data.addListToDataBase
-import com.studying.bettamovies.ui.main.list.data.getMoviesList
 import io.reactivex.disposables.Disposable
 
 
-class ListPresenter {
+class ListPresenter(private val activity: AppCompatActivity) {
 
     var view: MyListView? = null
-    lateinit var disposable: Disposable
-    lateinit var activity: FragmentActivity
+    var disposable: Disposable? = null
+    var repository: Repository = (activity.application as App).repository
 
     fun userSelectedMovie(filmID: String, root: View) {
-        val detailsFragment = FilmDetailsFragment.getInstance(filmID)?.apply {
+        val detailsFragment = FilmDetailsFragment.getInstance(activity, filmID)?.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 sharedElementEnterTransition = DetailsTransition()
                 enterTransition = Fade()
@@ -36,10 +37,11 @@ class ListPresenter {
         view?.showDetails(frTransition)
     }
 
-    fun userSeeView() {
-       disposable = getMoviesList(activity).subscribe({
-           addListToDataBase(it, activity)
+    fun userSeesView() {
+       disposable = repository.getMoviesList().subscribe({
+           repository.addListToDataBase(it)
            view?.updateUi(it)
-       },{view?.showToast("Internet connection error")})
+       },{it.printStackTrace()
+           view?.showToast("Internet connection error")})
     }
 }
