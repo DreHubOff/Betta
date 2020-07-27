@@ -63,19 +63,22 @@ class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(),
     }
 
     override fun updateUI(movieEntity: MovieEntity?) {
-        GlobalScope.launch {
-            delay(300)
-            withContext(Dispatchers.Main){
-                info_scroll.visibility = View.VISIBLE
-            }
+
+        txt_details_release_date.text = movieEntity?.releaseDate
+        val runtimeStr = movieEntity?.runtime.toString()
+        txt_details_runtime.text = if (runtimeStr.isEmpty()) {
+            "no information"
+        } else {
+            "$runtimeStr min"
         }
-        println(movieEntity)
-        txt_details_release_date.text = "Release date: ${movieEntity?.releaseDate}"
-        txt_details_runtime.text = "Runtime: ${movieEntity?.runtime} min"
-        txt_details_genres.text =
-            "Genres: ${movieEntity?.genres}"
-       // txt_details_rate.text = "Vote count: ${movieEntity?.voteCount}"
-        txt_details_overview.text = "Overview:\n\t${movieEntity?.overview}"
+        txt_details_genres.text = movieEntity?.genres.orEmpty().ifEmpty { "no information" }
+        txt_details_overview.text = movieEntity?.overview.orEmpty().ifEmpty { "no information" }
+        val budgetStr = movieEntity?.budget.toString()
+        txt_details_budget.text = if (budgetStr.isEmpty() || budgetStr == "0") {
+            "no information"
+        } else {
+            "$budgetStr$"
+        }
         txt_details_budget.text = "Budget: ${movieEntity?.budget}"
         txt_details_homepage.text = "Homepage:\n\t${movieEntity?.homepage}"
         txt_details_original_language.text = "Original language: ${movieEntity?.language}"
