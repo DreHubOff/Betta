@@ -18,6 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_film_details_fragment.*
+import kotlinx.android.synthetic.main.fragment_film_details_fragment.view.*
 import kotlinx.coroutines.*
 
 class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(), DetailsView {
@@ -49,7 +50,7 @@ class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.view = this
-        presenter.userSeesView(this.filmId)
+        presenter.userSeesView(this.filmId, view.background_logo)
     }
 
     override fun onStop() {

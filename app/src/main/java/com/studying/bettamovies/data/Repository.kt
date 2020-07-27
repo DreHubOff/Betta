@@ -2,8 +2,11 @@ package com.studying.bettamovies.data
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.transition.Fade
+import android.transition.Transition
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.studying.bettamovies.db.DataBase
 import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.network.ApiService
@@ -13,6 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.File
 
 class Repository(private val dataBase: DataBase, private val modelConverter: ModelConverter) {
 
@@ -87,6 +91,7 @@ class Repository(private val dataBase: DataBase, private val modelConverter: Mod
                     }
                 )
             )
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(image)
     }
 }

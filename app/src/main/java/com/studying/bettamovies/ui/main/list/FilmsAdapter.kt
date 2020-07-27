@@ -1,5 +1,6 @@
 package com.studying.bettamovies.ui.main.list
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +9,13 @@ import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.studying.bettamovies.R
 import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.interfaces.OnFilmClickListener
 import com.studying.bettamovies.network.ApiService
 import kotlinx.android.synthetic.main.item_films.view.*
+
 
 class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
 
@@ -45,7 +48,7 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
     class FilmsHolder(
         itemView: View,
         private var listener: OnFilmClickListener
-    ) : RecyclerView.ViewHolder(itemView) {
+    ) : RecyclerView.ViewHolder(itemView){
         private var nameUI: TextView = itemView.txt_name
         private var popularityUI: TextView = itemView.txt_popularity
         private var posterUI: ImageView = itemView.img_poster
@@ -56,6 +59,7 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
             popularityUI.text = movie.popularity.toString()
             Glide.with(itemView.context)
                 .load(ApiService.getImageUrl(movie.image))
+                .transition(DrawableTransitionOptions.withCrossFade(500))
                 .into(posterUI)
             root.setOnClickListener { listener.onFilmClick(movie.movieID.toString(), root) }
         }

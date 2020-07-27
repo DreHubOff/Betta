@@ -25,7 +25,7 @@ class ModelConverter {
 
     fun convertSingleMovie(movieDetails: FilmDetails, movieEntity: MovieEntity) =
         movieEntity.apply {
-            genres = movieDetails.genres.joinToString(",")
+            genres = movieDetails.genres.joinToString { "${it.GenreName} " }
             budget = movieDetails.budget
             homepage = movieDetails.homepage
             overview = movieDetails.overview

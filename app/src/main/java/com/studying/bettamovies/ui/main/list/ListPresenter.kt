@@ -11,37 +11,47 @@ import com.studying.bettamovies.data.Repository
 import com.studying.bettamovies.ui.animation.DetailsTransition
 import com.studying.bettamovies.ui.details.FilmDetailsFragment
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
 
 class ListPresenter(private val activity: AppCompatActivity) {
 
     var view: MyListView? = null
     var disposable: Disposable? = null
-    var repository: Repository = (activity.application as App).repository
+
+    @Inject
+    lateinit var repository: Repository
+    init {
+        (activity.applicationContext as App).appComponent.inject(this)
+    }
 
     fun userSelectedMovie(filmID: String, root: View) {
-        val detailsFragment = FilmDetailsFragment.getInstance(activity, filmID)?.apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                sharedElementEnterTransition = DetailsTransition()
-                enterTransition = Fade()
-                sharedElementReturnTransition = DetailsTransition()
+        val detailsFragment = FilmDetailsFragment
+            .getInstance(activity, filmID).apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    sharedElementEnterTransition = DetailsTransition()
+                    enterTransition = Fade()
+                    sharedElementReturnTransition = DetailsTransition()
+                }
             }
-        }
 
         val frTransition = activity.supportFragmentManager
             .beginTransaction()
-            .addSharedElement(root, "transitionImage")
-            .replace(R.id.main_container, detailsFragment!!)
             .addToBackStack(null)
+            .addSharedElement(root, "transitionImage")
+            .replace(R.id.main_container, detailsFragment)
+
 
         view?.showDetails(frTransition)
     }
 
     fun userSeesView() {
-       disposable = repository.getMoviesList().subscribe({
-           repository.addListToDataBase(it)
-           view?.updateUi(it)
-       },{it.printStackTrace()
-           view?.showToast("Internet connection error")})
+        disposable = repository.getMoviesList().subscribe({
+            repository.addListToDataBase(it)
+            view?.updateUi(it)
+        }, {
+            it.printStackTrace()
+            view?.showToast("Internet connection error")
+        })
     }
 }

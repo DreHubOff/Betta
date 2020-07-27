@@ -15,8 +15,8 @@
         app:spanCount="2"
         tools:listitem="@layout/item_films" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"/>
+<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--        android:id="@+id/swipe_refresh_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="150dp"/>-->
 </FrameLayout>

@@ -11,7 +11,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_root"
+        android:transitionName="transitionImage"
         android:layout_width="match_parent"
+        android:background="#3A1F6A"
         android:layout_height="match_parent">
 
         <ImageView
