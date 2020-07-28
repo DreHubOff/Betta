@@ -1,8 +1,11 @@
 package com.studying.bettamovies.data
 
+import android.content.Intent
+import android.net.Uri
 import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.network.models.FilmDetails
 import com.studying.bettamovies.network.models.Movie
+import kotlinx.android.synthetic.main.fragment_film_details_fragment.*
 
 class ModelConverter {
 
@@ -25,12 +28,13 @@ class ModelConverter {
 
     fun convertSingleMovie(movieDetails: FilmDetails, movieEntity: MovieEntity) =
         movieEntity.apply {
-            genres = movieDetails.genres.joinToString { "${it.GenreName} " }
-            budget = movieDetails.budget
-            homepage = movieDetails.homepage
-            overview = movieDetails.overview
-            releaseDate = movieDetails.releaseDate
-            runtime = movieDetails.runtime
+            genres = validateInputData(movieDetails.genres.joinToString { "${it.GenreName} " })
+            budget =  validateInputData(movieDetails.budget,"\$")
+            homepage = validateInputData(movieDetails.homepage)
+            overview = validateInputData(movieDetails.overview)
+            releaseDate = validateInputData(movieDetails.releaseDate)
+            runtime = validateInputData(movieDetails.runtime, "min")
             backdropImageURL = movieDetails.backdropImageURL
+
         }
 }

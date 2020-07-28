@@ -16,12 +16,13 @@ import com.studying.bettamovies.interfaces.OnBackPressListener
 import com.studying.bettamovies.interfaces.OnFilmClickListener
 import com.studying.bettamovies.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_films.*
+import javax.inject.Inject
 
 class FilmsFragment : Fragment(),
     OnFilmClickListener, MyListView, OnBackPressListener{
 
     private lateinit var adapterFilm: FilmsAdapter
-    private lateinit var presenter: ListPresenter
+    lateinit var presenter: ListPresenter
     private lateinit var activity: MainActivity
 
     companion object {

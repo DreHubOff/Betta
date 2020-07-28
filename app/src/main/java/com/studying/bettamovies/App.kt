@@ -9,6 +9,7 @@ import com.studying.bettamovies.dagger.DaggerAppComponent
 import com.studying.bettamovies.dagger.modules.BaseModule
 import com.studying.bettamovies.dagger.modules.FilmsFragmentModule
 import com.studying.bettamovies.dagger.modules.RepositoryModule
+import com.studying.bettamovies.data.init
 
 
 class App : Application() {
@@ -23,17 +24,6 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Glide.init(this, initGlide())
+        Glide.get(this).init(this)
     }
-
-    private fun initGlide() =
-        GlideBuilder().apply {
-            setDiskCache(
-                InternalCacheDiskCacheFactory(
-                    this@App,
-                    "Glide_Cache_BettaMovies",
-                    1024 * 1024 * 50
-                )
-            )
-        }
 }

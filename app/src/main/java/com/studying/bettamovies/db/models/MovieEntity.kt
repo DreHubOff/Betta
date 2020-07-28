@@ -20,7 +20,7 @@ data class MovieEntity(
     @ColumnInfo(name = "genres")
     var genres: String? = null,
     @ColumnInfo(name = "budget")
-    var budget: Int = 0,
+    var budget: String?= null,
     @ColumnInfo(name = "homepage")
     var homepage: String? = null,
     @ColumnInfo(name = "overview")
@@ -28,7 +28,7 @@ data class MovieEntity(
     @ColumnInfo(name = "release_date")
     var releaseDate: String? = null,
     @ColumnInfo(name = "runtime")
-    var runtime: Int = 0,
+    var runtime: String? = null,
     @ColumnInfo(name = "background_url")
     var backdropImageURL: String? = null,
 

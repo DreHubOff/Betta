@@ -3,6 +3,7 @@ package com.studying.bettamovies.ui.details
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.studying.bettamovies.R
 import com.studying.bettamovies.data.validateInputData
+import com.studying.bettamovies.databinding.FragmentFilmDetailsFragmentBinding
 import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.FilmDetails
@@ -28,6 +31,7 @@ class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(),
 
     private lateinit var filmId: String
     private lateinit var presenter: DetailsPresenter
+    lateinit var binding: FragmentFilmDetailsFragmentBinding
 
     companion object {
         private var filmDetailsFragment: FilmDetailsFragment? = null
@@ -48,7 +52,13 @@ class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_film_details_fragment, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_film_details_fragment,
+            container,
+            false
+        )
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,28 +76,17 @@ class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(),
     }
 
     override fun updateUI(movieEntity: MovieEntity?) {
-        txt_details_release_date.text = validateInputData(movieEntity?.releaseDate)
-
-        txt_details_runtime.text = validateInputData(movieEntity?.runtime, "min")
-
-        txt_details_genres.text = validateInputData(movieEntity?.genres)
-
-        txt_details_overview.text = validateInputData(movieEntity?.overview)
-
-        txt_details_budget.text = validateInputData(movieEntity?.budget, "\$")
-
-        txt_details_original_language.text = validateInputData(movieEntity?.language)
-
-        txt_details_homepage.text = validateInputData(movieEntity?.homepage)
-
+        binding.movie = movieEntity
         txt_details_homepage.setOnClickListener {
             if (validateInputData(movieEntity?.homepage) != "no information") {
                 val intent = Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(validateInputData(movieEntity?.homepage)))
+                    Uri.parse(validateInputData(movieEntity?.homepage))
+                )
+                txt_details_homepage.setTextColor(resources.getColor(R.color.blue_light))
                 startActivity(intent)
-            }else{
-                // TODO: 28.07.2020
+            } else {
+                txt_details_homepage.setTextColor(resources.getColor(R.color.green_light))
             }
         }
     }
