@@ -2,6 +2,8 @@ package com.studying.bettamovies.ui.details
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.studying.bettamovies.R
+import com.studying.bettamovies.data.validateInputData
 import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.network.ApiService
 import com.studying.bettamovies.network.models.FilmDetails
@@ -63,24 +66,29 @@ class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(),
     }
 
     override fun updateUI(movieEntity: MovieEntity?) {
+        txt_details_release_date.text = validateInputData(movieEntity?.releaseDate)
 
-        txt_details_release_date.text = movieEntity?.releaseDate
-        val runtimeStr = movieEntity?.runtime.toString()
-        txt_details_runtime.text = if (runtimeStr.isEmpty()) {
-            "no information"
-        } else {
-            "$runtimeStr min"
+        txt_details_runtime.text = validateInputData(movieEntity?.runtime, "min")
+
+        txt_details_genres.text = validateInputData(movieEntity?.genres)
+
+        txt_details_overview.text = validateInputData(movieEntity?.overview)
+
+        txt_details_budget.text = validateInputData(movieEntity?.budget, "\$")
+
+        txt_details_original_language.text = validateInputData(movieEntity?.language)
+
+        txt_details_homepage.text = validateInputData(movieEntity?.homepage)
+
+        txt_details_homepage.setOnClickListener {
+            if (validateInputData(movieEntity?.homepage) != "no information") {
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(validateInputData(movieEntity?.homepage)))
+                startActivity(intent)
+            }else{
+                // TODO: 28.07.2020
+            }
         }
-        txt_details_genres.text = movieEntity?.genres.orEmpty().ifEmpty { "no information" }
-        txt_details_overview.text = movieEntity?.overview.orEmpty().ifEmpty { "no information" }
-        val budgetStr = movieEntity?.budget.toString()
-        txt_details_budget.text = if (budgetStr.isEmpty() || budgetStr == "0") {
-            "no information"
-        } else {
-            "$budgetStr$"
-        }
-        txt_details_budget.text = "Budget: ${movieEntity?.budget}"
-        txt_details_homepage.text = "Homepage:\n\t${movieEntity?.homepage}"
-        txt_details_original_language.text = "Original language: ${movieEntity?.language}"
     }
 }

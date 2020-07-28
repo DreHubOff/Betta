@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BettaMovies</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="write_name_or_genre">Write name or genre</string>
     <string name="release_date">Release date:</string>
@@ -8,4 +8,6 @@
     <string name="genres">Genres:</string>
     <string name="overview">Overview:</string>
     <string name="budget">Budget:</string>
+    <string name="original_language">Original language:</string>
+    <string name="homepage">Homepage:</string>
 </resources>

@@ -25,13 +25,7 @@ class FilmsFragment : Fragment(),
     private lateinit var activity: MainActivity
 
     companion object {
-        private var filmsFragment: FilmsFragment? = null
-        fun getInstance():FilmsFragment{
-            if (filmsFragment == null){
-                filmsFragment = FilmsFragment()
-            }
-            return filmsFragment!!
-        }
+        fun getInstance() = FilmsFragment()
     }
 
     override fun onAttach(context: Context) {

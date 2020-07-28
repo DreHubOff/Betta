@@ -33,7 +33,7 @@
             android:layout_margin="19dp"
             android:textSize="20sp"
             android:textStyle="italic"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="@+id/img_poster"
             app:layout_constraintTop_toTopOf="@+id/img_poster"
             tools:text="popularity" />
