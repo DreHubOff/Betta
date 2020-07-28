@@ -58,7 +58,6 @@ class Repository(private val dataBase: DataBase, private val modelConverter: Mod
         return dataBase.getActivityDao()
             .getMovieById(movieId.toInt())
             .flatMap { Single.just(checkSingleMovie(it)) }
-          //  .delay(3000, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
