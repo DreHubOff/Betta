@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="movie"
             type="com.studying.bettamovies.db.models.MovieEntity" />
@@ -13,6 +15,14 @@
         android:background="#000000"
         android:transitionName="transitionView"
         tools:context=".ui.details.FilmDetailsFragment">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader_anim"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading_anim"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -40,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -75,10 +85,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="casual"
+                        android:text="@{movie.releaseDate}"
                         android:textColor="@color/green_light"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="@{movie.releaseDate}"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -104,10 +114,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="casual"
+                        android:text="@{movie.runtime}"
                         android:textColor="@color/green_light"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="@{movie.runtime}"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -133,10 +143,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="casual"
+                        android:text="@{movie.genres}"
                         android:textColor="@color/green_light"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="@{movie.genres}"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -162,10 +172,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
                         android:fontFamily="casual"
+                        android:text="@{movie.overview}"
                         android:textColor="@color/green_light"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="@{movie.overview}"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -191,10 +201,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="casual"
+                        android:text="@{movie.budget}"
                         android:textColor="@color/green_light"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="@{movie.budget}"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -220,10 +230,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="casual"
+                        android:text="@{movie.language}"
                         android:textColor="@color/green_light"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="@{movie.language}"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -251,10 +261,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:fontFamily="casual"
+                        android:text="@{movie.homepage}"
                         android:textColor="@color/blue_light"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:text="@{movie.homepage}"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
