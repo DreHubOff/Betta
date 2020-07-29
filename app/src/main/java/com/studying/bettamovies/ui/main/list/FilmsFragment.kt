@@ -63,11 +63,6 @@ class FilmsFragment : Fragment(),
     override fun updateUi(list: List<MovieEntity>) =
         adapterFilm.update(list)
 
-    override fun onStop() {
-        super.onStop()
-        presenter.disposable?.dispose()
-    }
-
     override fun onBackPressed(){
        (activity).finish()
     }

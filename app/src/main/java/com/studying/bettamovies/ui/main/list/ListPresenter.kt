@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.studying.bettamovies.App
 import com.studying.bettamovies.data.Repository
+import com.studying.bettamovies.db.models.MovieEntity
 import com.studying.bettamovies.ui.MainActivity
 import com.studying.bettamovies.ui.animation.DetailsTransition
 import com.studying.bettamovies.ui.details.FilmDetailsFragment
@@ -16,10 +17,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-class ListPresenter (private val activity: MainActivity) {
+class ListPresenter (private val activity: MainActivity): Repository.OnRequestListener {
 
     var view: MyListView? = null
-    var disposable: Disposable? = null
 
     @Inject
     lateinit var repository: Repository
@@ -48,12 +48,11 @@ class ListPresenter (private val activity: MainActivity) {
     }
 
     fun userSeesView() {
-        disposable = repository.getMoviesList().subscribe({
-            repository.addListToDataBase(it)
-            view?.updateUi(it)
-        }, {
-            it.printStackTrace()
-            view?.showToast("Internet connection error")
-        })
+        repository.getMoviesList(this)
+    }
+
+    override fun onPopularListRequest(moviesList: List<MovieEntity>?) {
+        if (moviesList.isNullOrEmpty()) view?.showToast("Internet connection error")
+        else view?.updateUi(moviesList)
     }
 }

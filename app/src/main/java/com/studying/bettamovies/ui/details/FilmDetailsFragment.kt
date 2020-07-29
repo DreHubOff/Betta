@@ -17,7 +17,6 @@ import com.studying.bettamovies.databinding.FragmentFilmDetailsFragmentBinding
 import com.studying.bettamovies.db.models.MovieEntity
 import kotlinx.android.synthetic.main.fragment_film_details_fragment.*
 import kotlinx.android.synthetic.main.fragment_film_details_fragment.view.*
-import kotlinx.android.synthetic.main.item_films.*
 
 class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(), DetailsView {
 
@@ -96,7 +95,7 @@ class FilmDetailsFragment(private val activity: AppCompatActivity) : Fragment(),
                 loader_anim.playAnimation()
             }
             false -> {
-                loader_anim.visibility = View.INVISIBLE
+                loader_anim.visibility = View.GONE
                 loader_anim.pauseAnimation()
             }
         }

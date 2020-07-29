@@ -2,8 +2,6 @@ package com.studying.bettamovies.data
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.transition.Fade
-import android.transition.Transition
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -16,18 +14,23 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.File
 import java.util.concurrent.TimeUnit
 
 class Repository(private val dataBase: DataBase, private val modelConverter: ModelConverter) {
 
-    fun getMoviesList(): Single<List<MovieEntity>> {
-        return dataBase
-            .getActivityDao()
+    @SuppressLint("CheckResult")
+    fun getMoviesList(onRequestListener: OnRequestListener?) {
+        dataBase.getActivityDao()
             .selectAll()
             .flatMap { Single.just(checkList(it)) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                onRequestListener?.onPopularListRequest(it)
+                addListToDataBase(it)
+            }, {
+                onRequestListener?.onPopularListRequest(null)
+            })
     }
 
     @SuppressLint("CheckResult")
@@ -46,7 +49,7 @@ class Repository(private val dataBase: DataBase, private val modelConverter: Mod
         }
     }
 
-    fun addListToDataBase(genList: List<MovieEntity>) {
+    private fun addListToDataBase(genList: List<MovieEntity>) {
         GlobalScope.launch {
             dataBase
                 .getActivityDao()
@@ -94,5 +97,9 @@ class Repository(private val dataBase: DataBase, private val modelConverter: Mod
             )
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(image)
+    }
+
+    interface OnRequestListener {
+        fun onPopularListRequest(moviesList: List<MovieEntity>?)
     }
 }

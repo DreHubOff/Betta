@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.studying.bettamovies.App
 import com.studying.bettamovies.data.Repository
+import com.studying.bettamovies.models.Loader
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_film_details_fragment.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class DetailsPresenter(private val activity: AppCompatActivity) {
+class DetailsPresenter(private val activity: AppCompatActivity): Loader.OnLoadingStartListener {
     var disposable: Disposable? = null
     var view: DetailsView? = null
 
@@ -26,26 +27,28 @@ class DetailsPresenter(private val activity: AppCompatActivity) {
     }
 
     fun userSeesView(movieId: String, imageView: ImageView) {
-        val dp = Single.just(true)
-            .delay(300, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ view?.showLoader(it) }, {/*do nothing*/ })
+        val loader = Loader(this)
+            loader.startLoadingDelay(700)
+
         disposable = repository.getMovieById(movieId)
             .subscribe({
                 view?.apply {
                     updateUI(it)
-                    dp.dispose()
+                    loader.unActiveDelay()
                     showLoader(false)
                     changeInfoVisibility(View.VISIBLE)
                 }
                 repository.updateDataBase(it)
                 repository.setupImage(imageView, activity.applicationContext, it)
             }, {
-                dp.dispose()
+                loader.unActiveDelay()
                 view?.showLoader(false)
                 view?.showToast("Network connection error")
             })
 
+    }
+
+    override fun onLoadingStart() {
+        view?.showLoader(true)
     }
 }
