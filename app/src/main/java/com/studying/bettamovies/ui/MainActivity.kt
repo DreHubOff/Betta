@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (filmsFragment.isResumed)
-        filmsFragment.onBackPressed()
+            finish()
         else super.onBackPressed()
     }
 }

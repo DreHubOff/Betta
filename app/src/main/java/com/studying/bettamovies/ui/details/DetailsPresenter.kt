@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_film_details_fragment.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class DetailsPresenter(private val activity: AppCompatActivity): Loader.OnLoadingStartListener {
+class DetailsPresenter(private val app: App): Loader.OnLoadingStartListener {
     var disposable: Disposable? = null
     var view: DetailsView? = null
 
@@ -23,7 +23,7 @@ class DetailsPresenter(private val activity: AppCompatActivity): Loader.OnLoadin
     lateinit var repository: Repository
 
     init {
-        (activity.applicationContext as App).appComponent.inject(this)
+        app.appComponent.inject(this)
     }
 
     fun userSeesView(movieId: String, imageView: ImageView) {
@@ -39,7 +39,7 @@ class DetailsPresenter(private val activity: AppCompatActivity): Loader.OnLoadin
                     changeInfoVisibility(View.VISIBLE)
                 }
                 repository.updateDataBase(it)
-                repository.setupImage(imageView, activity.applicationContext, it)
+                repository.setupImage(imageView, app, it)
             }, {
                 loader.unActiveDelay()
                 view?.showLoader(false)

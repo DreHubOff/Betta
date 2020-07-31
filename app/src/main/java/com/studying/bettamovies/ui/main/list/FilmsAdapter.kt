@@ -61,7 +61,7 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
                 .load(ApiService.getImageUrl(movie.image))
                 .transition(DrawableTransitionOptions.withCrossFade(500))
                 .into(posterUI)
-            root.setOnClickListener { listener.onFilmClick(movie.movieID.toString(), root) }
+            root.setOnClickListener { listener.onFilmClick(movie.movieID.toString()) }
         }
 
     }

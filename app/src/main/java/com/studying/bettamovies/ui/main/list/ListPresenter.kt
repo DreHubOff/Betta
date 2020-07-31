@@ -1,50 +1,35 @@
 package com.studying.bettamovies.ui.main.list
 
-import android.app.Activity
+import androidx.fragment.app.Fragment
 import com.studying.bettamovies.R
-import android.os.Build
-import android.transition.Fade
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.studying.bettamovies.App
 import com.studying.bettamovies.data.Repository
 import com.studying.bettamovies.db.models.MovieEntity
-import com.studying.bettamovies.ui.MainActivity
-import com.studying.bettamovies.ui.animation.DetailsTransition
 import com.studying.bettamovies.ui.details.FilmDetailsFragment
-import io.reactivex.disposables.Disposable
+import io.reactivex.Single
 import javax.inject.Inject
-import javax.inject.Singleton
 
 
-class ListPresenter (private val activity: MainActivity): Repository.OnRequestListener {
+class ListPresenter (private val app: App): Repository.OnRequestListener {
 
     var view: MyListView? = null
 
     @Inject
     lateinit var repository: Repository
+    @Inject
+    lateinit var detailsFragment: FilmDetailsFragment
+
     init {
-        (activity.applicationContext as App).appComponent.inject(this)
+        app.appComponent.inject(this)
     }
 
-    fun userSelectedMovie(filmID: String, root: View) {
-        val detailsFragment = FilmDetailsFragment
-            .getInstance(activity, filmID).apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    sharedElementEnterTransition = DetailsTransition()
-                    enterTransition = Fade()
-                    sharedElementReturnTransition = DetailsTransition()
-                }
-            }
-
-        val frTransition = activity.supportFragmentManager
-            .beginTransaction()
-            .addToBackStack(null)
-            .addSharedElement(root, "transitionImage")
-            .replace(R.id.main_container, detailsFragment)
-
-
-        view?.showDetails(frTransition)
+    fun userSelectedMovie(filmID: String, filmsFragment :Fragment) {
+        detailsFragment.idMessage = Single.just(filmID)
+        filmsFragment.activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.addToBackStack(null)
+            ?.replace(R.id.main_container, detailsFragment)
+            ?.commit()
     }
 
     fun userSeesView() {
