@@ -9,11 +9,14 @@
             type="com.studying.bettamovies.db.models.MovieEntity" />
     </data>
 
-    <FrameLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
-        android:transitionName="transitionView"
+        android:layout_marginHorizontal="3dp"
+        android:layout_marginVertical="10dp"
+        app:cardBackgroundColor="#000000"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="8dp"
         tools:context=".ui.details.FilmDetailsFragment">
 
         <com.airbnb.lottie.LottieAnimationView
@@ -21,13 +24,13 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
-            app:lottie_loop="true"
             android:visibility="gone"
-            app:lottie_rawRes="@raw/loading_anim"/>
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading_anim" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="420dp">
+            android:layout_height="280dp">
 
             <ImageView
                 android:id="@+id/background_logo"
@@ -51,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
+            android:paddingHorizontal="6dp"
             android:visibility="invisible">
 
             <LinearLayout
@@ -271,5 +275,6 @@
 
             </LinearLayout>
         </ScrollView>
-    </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
 </layout>

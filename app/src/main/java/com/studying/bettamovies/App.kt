@@ -8,6 +8,7 @@ import com.studying.bettamovies.dagger.AppComponent
 import com.studying.bettamovies.dagger.DaggerAppComponent
 import com.studying.bettamovies.dagger.modules.*
 import com.studying.bettamovies.data.init
+import com.studying.bettamovies.ui.MainActivity
 
 
 class App : Application() {
@@ -17,8 +18,11 @@ class App : Application() {
             .baseModule(BaseModule(this))
             .repositoryModule(RepositoryModule())
             .filmsFragmentModule(FilmsFragmentModule())
+            .mainPresenterModule(MainPresenterModule())
             .listPresenterModule(ListPresenterModule())
             .filmDetailsFragmentModule(FilmDetailsFragmentModule())
+            .mainActivityHolderModule(MainActivityHolderModule())
+            .fragmentNavigatorModule(FragmentNavigatorModule())
             .build()
     }
 

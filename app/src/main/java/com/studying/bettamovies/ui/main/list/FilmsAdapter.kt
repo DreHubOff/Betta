@@ -1,6 +1,7 @@
 package com.studying.bettamovies.ui.main.list
 
 import android.net.Uri
+import android.transition.ChangeTransform
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,6 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: FilmsHolder, position: Int) {
         holder.bind(listOfFilms[position])
-        ViewCompat.setTransitionName(holder.root, position.toString() + "_movie")
     }
 
     fun update(list: List<MovieEntity>) {
@@ -52,8 +52,8 @@ class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Ada
         private var nameUI: TextView = itemView.txt_name
         private var popularityUI: TextView = itemView.txt_popularity
         private var posterUI: ImageView = itemView.img_poster
+        private var root: View = itemView.item_root
 
-        var root: View = itemView.item_root
         fun bind(movie: MovieEntity) {
             nameUI.text = movie.originalTitle
             popularityUI.text = movie.popularity.toString()

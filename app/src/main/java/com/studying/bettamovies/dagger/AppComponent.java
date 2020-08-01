@@ -1,15 +1,19 @@
 package com.studying.bettamovies.dagger;
 
 
-import androidx.fragment.app.ListFragment;
-
 import com.studying.bettamovies.dagger.modules.BaseModule;
 import com.studying.bettamovies.dagger.modules.FilmDetailsFragmentModule;
 import com.studying.bettamovies.dagger.modules.FilmsFragmentModule;
+import com.studying.bettamovies.dagger.modules.FragmentNavigatorModule;
 import com.studying.bettamovies.dagger.modules.ListPresenterModule;
+import com.studying.bettamovies.dagger.modules.MainPresenterModule;
+import com.studying.bettamovies.dagger.modules.MainActivityHolderModule;
 import com.studying.bettamovies.dagger.modules.RepositoryModule;
+import com.studying.bettamovies.data.FragmentNavigator;
 import com.studying.bettamovies.ui.MainActivity;
+import com.studying.bettamovies.ui.MainPresenter;
 import com.studying.bettamovies.ui.details.DetailsPresenter;
+import com.studying.bettamovies.ui.details.FilmDetailsFragment;
 import com.studying.bettamovies.ui.main.list.FilmsFragment;
 import com.studying.bettamovies.ui.main.list.ListPresenter;
 
@@ -23,7 +27,10 @@ import dagger.Component;
         FilmsFragmentModule.class,
         RepositoryModule.class,
         ListPresenterModule.class,
-        FilmDetailsFragmentModule.class
+        FilmDetailsFragmentModule.class,
+        MainPresenterModule.class,
+        MainActivityHolderModule.class,
+        FragmentNavigatorModule.class
 })
 
 public interface AppComponent {
@@ -31,4 +38,6 @@ public interface AppComponent {
     void inject(MainActivity mainActivity);
     void inject(DetailsPresenter detailsPresenter);
     void inject(FilmsFragment filmsFragment);
+    void inject(MainPresenter mainPresenter);
+    void inject(FragmentNavigator fragmentNavigator);
 }

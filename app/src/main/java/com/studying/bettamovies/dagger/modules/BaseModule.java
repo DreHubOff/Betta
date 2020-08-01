@@ -2,6 +2,8 @@ package com.studying.bettamovies.dagger.modules;
 
 import android.content.Context;
 
+import com.studying.bettamovies.App;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
