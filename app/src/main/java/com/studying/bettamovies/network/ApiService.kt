@@ -1,6 +1,6 @@
 package com.studying.bettamovies.network
 
-import com.studying.bettamovies.network.models.FilmDetails
+import com.studying.bettamovies.network.models.FilmDetailsRequest
 import com.studying.bettamovies.network.models.RequestModel
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -15,6 +15,7 @@ import retrofit2.http.Query
 
 object ApiService {
     private const val END_POINT = "https://api.themoviedb.org/3/movie/"
+    private const val END_POINT_IMAGE = "https://image.tmdb.org/t/p/w500/"
     private const val API_KAY = "f4667f3a076d211f6606630182df9053"
 
 
@@ -25,7 +26,7 @@ object ApiService {
     fun getDetailsById(id: Int) = movieApi.findById(id, API_KAY)
 
     fun getImageUrl(shortUrl: String) =
-        "https://image.tmdb.org/t/p/w500/$shortUrl"
+        "$END_POINT_IMAGE$shortUrl"
 
     interface MovieApi {
         @GET("popular")
@@ -38,7 +39,7 @@ object ApiService {
         @GET("{external_id}")
         fun findById(
             @Path("external_id")id: Int,
-            @Query("api_key") key: String): Single<FilmDetails>
+            @Query("api_key") key: String): Single<FilmDetailsRequest>
     }
 
 

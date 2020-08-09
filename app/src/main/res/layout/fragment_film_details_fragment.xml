@@ -3,20 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="movie"
-            type="com.studying.bettamovies.db.models.MovieEntity" />
+            type="com.studying.bettamovies.models.DetailsMovie" />
     </data>
 
-    <androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="3dp"
-        android:layout_marginVertical="10dp"
-        app:cardBackgroundColor="#000000"
-        app:cardElevation="2dp"
-        app:cardCornerRadius="8dp"
+
+        android:background="#000000"
         tools:context=".ui.details.FilmDetailsFragment">
 
         <com.airbnb.lottie.LottieAnimationView
@@ -30,7 +26,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp">
+            android:layout_height="250dp">
 
             <ImageView
                 android:id="@+id/background_logo"
@@ -65,7 +61,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
+                    android:layout_height="300dp"
                     android:layout_gravity="bottom" />
 
                 <LinearLayout
@@ -235,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="casual"
-                        android:text="@{movie.language}"
+                        android:text="@{movie.originalLanguage}"
                         android:textColor="@color/green_light"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -275,6 +271,6 @@
 
             </LinearLayout>
         </ScrollView>
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
 </layout>

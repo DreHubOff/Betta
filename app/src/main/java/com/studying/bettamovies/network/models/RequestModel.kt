@@ -6,5 +6,5 @@ data class RequestModel(
     @SerializedName("total_results")
     val total_results: Int,
     @SerializedName("results")
-    val movies: List<Movie>
+    val itemMovieRequests: List<ItemMovieRequest>
 )

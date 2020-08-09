@@ -1,67 +1,64 @@
 package com.studying.bettamovies.ui.main.list
 
-import android.net.Uri
-import android.transition.ChangeTransform
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.view.ViewCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.studying.bettamovies.App
 import com.studying.bettamovies.R
-import com.studying.bettamovies.db.models.MovieEntity
-import com.studying.bettamovies.interfaces.OnFilmClickListener
-import com.studying.bettamovies.network.ApiService
-import kotlinx.android.synthetic.main.item_films.view.*
+import com.studying.bettamovies.data.GlideMovieLoader
+import com.studying.bettamovies.databinding.ItemFilmsBinding
+import com.studying.bettamovies.ui.main.list.interfaces.OnFilmClickListener
+import com.studying.bettamovies.models.ItemMovie
+import javax.inject.Inject
 
 
-class FilmsAdapter(private val listener: OnFilmClickListener) : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
+class FilmsAdapter(private val listener: OnFilmClickListener) :
+    RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
 
-    private val listOfFilms = mutableListOf<MovieEntity>()
+    private val moviesListHolder = mutableListOf<ItemMovie>()
+
+    @Inject
+    lateinit var glideMovieLoader: GlideMovieLoader
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_films, parent, false)
-        return FilmsHolder(
-            v,
-            listener
+        (parent.context.applicationContext as App).appComponent.inject(this)
+        val view = LayoutInflater.from(parent.context).inflate(
+            R.layout.item_films,
+            parent,
+            false
         )
+        return FilmsHolder(view, glideMovieLoader, listener)
     }
 
-    override fun getItemCount() = listOfFilms.size
+    override fun getItemCount() = moviesListHolder.size
 
 
     override fun onBindViewHolder(holder: FilmsHolder, position: Int) {
-        holder.bind(listOfFilms[position])
+        holder.bind(moviesListHolder[position])
     }
 
-    fun update(list: List<MovieEntity>) {
-        listOfFilms.apply {
+    fun update(moviesList: List<ItemMovie>) {
+        moviesListHolder.apply {
             clear()
-            addAll(list)
+            addAll(moviesList)
         }
         notifyDataSetChanged()
     }
 
     class FilmsHolder(
         itemView: View,
-        private var listener: OnFilmClickListener
-    ) : RecyclerView.ViewHolder(itemView){
-        private var nameUI: TextView = itemView.txt_name
-        private var popularityUI: TextView = itemView.txt_popularity
-        private var posterUI: ImageView = itemView.img_poster
-        private var root: View = itemView.item_root
+        private val glideLoader: GlideMovieLoader,
+        private val listener: OnFilmClickListener
+    ) : RecyclerView.ViewHolder(itemView) {
+        private val binding: ItemFilmsBinding = DataBindingUtil.bind(itemView)!!
 
-        fun bind(movie: MovieEntity) {
-            nameUI.text = movie.originalTitle
-            popularityUI.text = movie.popularity.toString()
-            Glide.with(itemView.context)
-                .load(ApiService.getImageUrl(movie.image))
-                .transition(DrawableTransitionOptions.withCrossFade(500))
-                .into(posterUI)
-            root.setOnClickListener { listener.onFilmClick(movie.movieID.toString()) }
+        fun bind(movie: ItemMovie) {
+            binding.movie = movie
+            glideLoader.loadImage(binding.imgPoster, movie.posterURL)
+            binding.itemRoot.setOnClickListener { listener.onFilmClick(movie.netId) }
         }
 
     }
